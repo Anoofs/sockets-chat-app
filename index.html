@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sockets Chat App</title>
+		<!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
+		<style type="text/css">
+			body{
+				background: #f9f9f9;
+			}
+
+			#container{
+				width: 700px;
+				margin: 0 auto;
+			}
+
+			#chatWindow{
+				height: 300px;
+
+			}
+
+			#mainWrapper{
+				display: none;
+			}
+
+			#chatWrapper{
+				float:left;
+				border:1px #ccc solid;
+				border-radius: 10px;
+				background: f4f4f4;
+				padding: 10px;
+			}
+
+			#userWrapper{
+				float:left;
+				border:1px #ccc solid;
+				border-radius: 10px;
+				background: f4f4f4;
+				padding: 10px;
+				margin-left: 20px;
+				width: 150px;
+				max-height: 200px;
+			}
+
+			#namesWrapper{
+				float:left;	
+				border:1px #ccc solid;
+				border-radius: 10px;
+				background: f4f4f4;
+				padding: 10px;
+				margin-left: 20px; 
+			}
+
+			input{
+				height: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="namesWrapper">
+				<h2>Sockets Chat App</h2>
+				<p>Create Username:</p>
+				<form id="usernameForm">
+					<input size="35" id="username">
+					<input type="submit" value="Submit">
+				</form>
+			</div>
+
+			<div id="mainWrapper">
+				<h2>Sockets Chat App</h2>
+				<div id="chatWrapper">
+					<div id="chatWindow"></div>
+					<form id="messageForm">
+						<input size="35" id="message" placeholder="Type Message ...">
+						<input type="submit" value="send">
+					</form>
+				</div>
+			</div>
+
+			<div id="userWrapper">
+				<div id="users"></div>
+			</div>
+		</div>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			$(function(){
+				var socket = io.connect();
+				var $messageForm = $('#messageForm');
+				var $message = $('#message');
+				var $chat = $('#chatWindow');
+				var $usernameForm = $('#usernameForm');
+				var $users = $('#users');
+				var $username = $('#username');
+
+				$usernameForm.submit(function(){
+					
+
+				});
+
+				$messageForm.submit(function(e){
+					e.preventDefault();
+					socket.emit('send message', $message.val());
+					$message.val('');
+				});
+
+				socket.on('new message', function(data){
+					$chat.append(data.msg + '<br>');
+				})
+
+			})
+		</script>
+
+	</body>
+</html>
