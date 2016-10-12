@@ -22,7 +22,7 @@ io.sockets.on('connection', function(socket){
 		}
 	});
 
-	//Update usernames
+	//Update usernames	
 	function updateUsernames(){
 		io.sockets.emit('usernames', usernames);
 	}

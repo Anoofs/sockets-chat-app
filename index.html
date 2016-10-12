@@ -14,8 +14,26 @@
 			}
 
 			#chatWindow{
+				border-radius: inherit;
+				background-color: white;
 				height: 300px;
+				max-width: 265px;
+				overflow-wrap: break-word;
+				overflow-y: scroll;
+			}
 
+			form#messageForm{
+				margin-top: 4px;
+			}
+
+			ul#textList{
+				list-style-type: none;
+				margin-left: -25px;
+				margin-right: 10px;
+			}
+
+			h2#title{
+				text-align: center;
 			}
 
 			#mainWrapper{
@@ -58,7 +76,7 @@
 	<body>
 		<div id="container">
 			<div id="namesWrapper">
-				<h2>Sockets Chat App</h2>
+				<h2 id="title">Sockets Chat App</h2>
 				<p>Create Username:</p>
 				<div id="error"></div>
 				<form id="usernameForm">
@@ -68,9 +86,11 @@
 			</div>
 
 			<div id="mainWrapper">
-				<h2>Sockets Chat App</h2>
+				<h2 id="title">Sockets Chat App</h2>
 				<div id="chatWrapper">
-					<div id="chatWindow"></div>
+					<div id="chatWindow">
+						<ul id="textList"></ul>
+					</div>
 					<form id="messageForm">
 						<input size="35" id="message" placeholder="Type Message ...">
 						<input type="submit" value="send">
@@ -89,7 +109,7 @@
 				var socket = io.connect();
 				var $messageForm = $('#messageForm');
 				var $message = $('#message');
-				var $chat = $('#chatWindow');
+				var $chat = $('#textList');
 				var $usernameForm = $('#usernameForm');
 				var $users = $('#users');
 				var $username = $('#username');
@@ -97,7 +117,9 @@
 
 				$usernameForm.submit(function(e){
 					e.preventDefault();
-					socket.emit('new user', $username.val(), function(data){
+					var userNameValue = $username.val();
+					userNameValue = userNameValue.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					socket.emit('new user', userNameValue, function(data){
 						if(data){
 							$('#namesWrapper').hide();
 							$('#mainWrapper').show();
@@ -123,7 +145,8 @@
 				});
 
 				socket.on('new message', function(data){
-					$chat.append('<strong>'+ data.user +'</strong>: '+data.msg + '<br>');
+					data.msg = data.msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					$chat.append('<li>'+'<strong>'+ data.user +'</strong>: '+data.msg + '</li>');
 				})
 
 			})
