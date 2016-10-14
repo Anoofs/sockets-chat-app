@@ -1,49 +1,67 @@
 body{
-	background: #f9f9f9;
-}
+		background: #f9f9f9;
+	}
 
-#container{
-	width: 700px;
-	margin: 0 auto;
-}
+	#container{
+		width: 700px;
+		margin: 0 auto;
+	}
 
-#chatWindow{
-	height: 300px;
+	#chatWindow{
+		border-radius: inherit;
+		background-color: white;
+		height: 300px;
+		max-width: 265px;
+		overflow-wrap: break-word;
+		overflow-y: scroll;
+	}
 
-}
+	form#messageForm{
+		margin-top: 4px;
+	}
 
-#mainWrapper{
-	display: none;
-}
+	ul#textList{
+		list-style-type: none;
+		margin-left: -25px;
+		margin-right: 10px;
+	}
 
-#chatWrapper{
-	float:left;
-	border:1px #ccc solid;
-	border-radius: 10px solid;
-	background: f4f4f4;
-	padding: 10px;
-}
+	h2#title{
+		text-align: center;
+	}
 
-#userWrapper{
-	float:left;
-	border:1px #ccc solid;
-	border-radius: 10px solid;
-	background: f4f4f4;
-	padding: 10px;
-	margin-left: 20px;
-	width: 150px;
-	max-height: 200px;
-}
+	#mainWrapper{
+		display: none;
+	}
 
-#namesWrapper{
-	float:left;	
-	border:1px #ccc solid;
-	border-radius: 10px solid;
-	background: f4f4f4;
-	padding: 10px;
-	margin-left: 20px;
-}
+	#chatWrapper{
+		float:left;
+		border:1px #ccc solid;
+		border-radius: 10px;
+		background: #f4f4f4;
+		padding: 10px;
+	}
 
-input{
-	height: 30px;
-}
+	#userWrapper{
+		float:left;
+		border:1px #ccc solid;
+		border-radius: 10px;
+		background: #f4f4f4;
+		padding: 10px;
+		margin-left: 20px;
+		width: 150px;
+		max-height: 200px;
+	}
+
+	#namesWrapper{
+		float:left;	
+		border:1px #ccc solid;
+		border-radius: 10px;
+		background: #f4f4f4;
+		padding: 10px;
+		margin-left: 20px; 
+	}
+
+	input{
+		height: 30px;
+	}

@@ -2,24 +2,31 @@
 <html>
 	<head>
 		<title>Sockets Chat App</title>
-		<!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
+		<link href="css/styles.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<style type="text/css">
+			html{
+				background-color: azure;
+			}
+
 			body{
-				background: #f9f9f9;
+				background: azure;
 			}
 
 			#container{
-				width: 700px;
-				margin: 0 auto;
+			    background-color: azure;
+    			width: 550px;
+    			margin: 0 auto;
 			}
 
 			#chatWindow{
 				border-radius: inherit;
 				background-color: white;
 				height: 300px;
-				max-width: 265px;
+				max-width: 400px;
 				overflow-wrap: break-word;
 				overflow-y: scroll;
+				border: 1px #ccc solid;
 			}
 
 			form#messageForm{
@@ -27,79 +34,119 @@
 			}
 
 			ul#textList{
+				margin-top:10px;
 				list-style-type: none;
 				margin-left: -25px;
 				margin-right: 10px;
 			}
 
+			li{
+				color: gray;
+			}
+
 			h2#title{
+				color: gray;
 				text-align: center;
 			}
 
 			#mainWrapper{
 				display: none;
+				vertical-align: middle;			    
+			    margin: 0 auto;
 			}
 
 			#chatWrapper{
-				float:left;
+				background-color: beige;
+				float:none;				
 				border:1px #ccc solid;
 				border-radius: 10px;
-				background: #f4f4f4;
 				padding: 10px;
+			    margin-top: 40px;
+    			max-width: 400px;
 			}
 
 			#userWrapper{
-				float:left;
-				border:1px #ccc solid;
-				border-radius: 10px;
-				background: #f4f4f4;
-				padding: 10px;
-				margin-left: 20px;
-				width: 150px;
-				max-height: 200px;
+			    height: 360px;
+			    max-height: 360px;
+			    display: inline;
+			    color: gray;
+			    background-color: beige;
+			    float: right;
+			    border: 1px #ccc solid;
+			    border-radius: 10px;
+			    padding: 10px;   
+			    width: 150px;		
+			    overflow: scroll;
 			}
 
 			#namesWrapper{
-				float:left;	
-				border:1px #ccc solid;
-				border-radius: 10px;
-				background: #f4f4f4;
-				padding: 10px;
-				margin-left: 20px; 
+				max-width: 400px;				
+			    color: gray;
+			    float: none;
+			    background-color: beige;
+			    border: 1px #ccc solid;
+			    border-radius: 10px;
+			    padding: 20px;
+			    margin: 0 auto;
+			    margin-top: 40px;
 			}
 
 			input{
 				height: 30px;
 			}
+
+			.submitUser{
+			    margin-top: 10px;
+    			background-color: gray;
+    			border-color: gray;
+			}
+
+			form#usernameForm{
+				margin-top: 25px;
+			}
+
+			div#error {
+			    text-align: center;
+			    color: red;
+			}
+
+			.submitMessage{
+				width: 60px;
+			}
+
+			input#message{
+				display: inline;
+				width: 83%;
+			}
+
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<div id="namesWrapper">
+			<div class="form" id="namesWrapper">
 				<h2 id="title">Sockets Chat App</h2>
-				<p>Create Username:</p>
+				<!-- <p>Create Username:</p> -->
 				<div id="error"></div>
 				<form id="usernameForm">
-					<input size="35" id="username">
-					<input type="submit" value="Submit">
+					<input class="form-control" size="20" id="username" placeholder="Enter Username">
+					<button class="submitUser btn btn-lg btn-primary btn-block" type="submit" value="Submit">Submit</button>
 				</form>
 			</div>
 
 			<div id="mainWrapper">
-				<h2 id="title">Sockets Chat App</h2>
+				<!-- <h2 id="title">Sockets Chat App</h2> -->
+				<div id="userWrapper">
+					<div id="users"></div>
+				</div>	
 				<div id="chatWrapper">
 					<div id="chatWindow">
 						<ul id="textList"></ul>
 					</div>
 					<form id="messageForm">
-						<input size="35" id="message" placeholder="Type Message ...">
-						<input type="submit" value="send">
+						<input class="form-control" size="35" id="message" placeholder="Type Message...">
+						<button class="submitMessage btn btn-sm btn-primary" type="submit" value="send">Send</button>
 					</form>
-				</div>
-				
-				<div id="userWrapper">
-					<div id="users"></div>
-				</div>	
+				</div>						
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery-latest.min.js"></script>
