@@ -4,6 +4,13 @@ server = require('http').createServer(app),
 io = require('socket.io').listen(server);
 usernames = [];
 
+const apiai = require("api.ai");
+
+const nlp = new apiai({
+  token: "6d8ec50169d34cc497a499778a5e0b1f",
+  session: Math.random()
+});
+
 server.listen(process.env.PORT || 3000);
 
 app.get('/', function(req, res){
@@ -32,10 +39,22 @@ Bot.prototype.leave = function(){
 	// io.sockets.disconnect();
 };
 Bot.prototype.userJoined = function(username){
-	io.sockets.emit('new message', {msg: "Hi there " + username + ", I provide support with networking", user: 'networkSupportBot'});
+	io.sockets.emit('new message', {msg: "Hi there " + username + ", I provide support with networking. Enter '...' and type your query", user: 'networkSupportBot'});
 };
 Bot.prototype.userLeft = function(username){
 	io.sockets.emit('new message', {msg: "Goodbye " + username + ", glad to be of help", user: 'networkSupportBot'});
+};
+Bot.prototype.userQuery = function(queryText){
+	nlp.text(queryText, function (error, response) {
+		if (error) {
+			console.log(error);
+			io.sockets.emit('new message', {msg: error, user: 'networkSupportBot'});
+		}
+		else {
+			console.log(response);
+			io.sockets.emit('new message', {msg: response.result.fulfillment.speech, user: 'networkSupportBot'});
+		}
+	});
 };
 
 io.sockets.on('connection', function(socket){
@@ -59,6 +78,12 @@ io.sockets.on('connection', function(socket){
 	//Send Message
 	socket.on('send message', function(data){
 		io.sockets.emit('new message', {msg: data, user: socket.username});
+		if(data.indexOf('...') >= 0){
+			// io.sockets.emit('new message', {msg: , user: 'networkSupportBot'});
+			var queryString = data.replace('...', '');
+			console.log('query: ' + queryString);
+			bot.userQuery(queryString);
+		}
 	});
 
 	//Disconnect
