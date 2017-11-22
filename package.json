@@ -2,8 +2,8 @@
 	"name": "Sockets-chat-app",
 	"version": "0.0.1",
 	"private": "true",
-	"dependencies":{
-		"socket.io":"*",
-		"express":"*"
-	}		
+	"dependencies": {
+		"socket.io": "*",
+		"express": "*"
+	}
 }
