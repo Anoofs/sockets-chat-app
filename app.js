@@ -2,7 +2,8 @@ var express = require('express'),
 app = express(),
 server = require('http').createServer(app),
 io = require('socket.io').listen(server);
-usernames = [];
+// usernames = [];
+usernames = ['networkSupportBot'];
 
 const apiai = require("api.ai");
 
@@ -39,7 +40,7 @@ Bot.prototype.leave = function(){
 	// io.sockets.disconnect();
 };
 Bot.prototype.userJoined = function(username){
-	io.sockets.emit('new message', {msg: "Hi there " + username + ", I provide support with networking. Enter '...' and type your query", user: 'networkSupportBot'});
+	io.sockets.emit('new message', {msg: "Hi there " + username + ", I provide support with networking. Enter your query", user: 'networkSupportBot'});
 };
 Bot.prototype.userLeft = function(username){
 	io.sockets.emit('new message', {msg: "Goodbye " + username + ", glad to be of help", user: 'networkSupportBot'});
@@ -78,12 +79,12 @@ io.sockets.on('connection', function(socket){
 	//Send Message
 	socket.on('send message', function(data){
 		io.sockets.emit('new message', {msg: data, user: socket.username});
-		if(data.indexOf('...') >= 0){
+		// if(data.indexOf('...') >= 0){
 			// io.sockets.emit('new message', {msg: , user: 'networkSupportBot'});
-			var queryString = data.replace('...', '');
-			console.log('query: ' + queryString);
-			bot.userQuery(queryString);
-		}
+			// var queryString = data.replace('...', '');
+			console.log('query: ' + data);
+			bot.userQuery(data);
+		// }
 	});
 
 	//Disconnect
